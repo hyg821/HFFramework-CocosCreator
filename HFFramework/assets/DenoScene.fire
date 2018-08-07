@@ -826,7 +826,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "测试字典",
+    "_N$string": "资源加载",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1703,6 +1703,9 @@
     },
     "button1": {
       "__id__": 11
+    },
+    "button2": {
+      "__id__": 17
     }
   }
 ]

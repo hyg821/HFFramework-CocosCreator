@@ -21,10 +21,13 @@ export default class Demo extends cc.Component {
     @property(cc.Node)
     public button1:cc.Node=null;
 
+    @property(cc.Node)
+    public button2:cc.Node=null;
+
     start(){
         ApiConverter.ButtonAddClick(this.button,"Button0","Button0Click","fxk");
-
-        ApiConverter.NodeAddEvent(this.button1,cc.Node.EventType.TOUCH_START,this.Collection);
+        ApiConverter.NodeAddEvent(this.button1,cc.Node.EventType.TOUCH_START,this,this.Collection);
+        ApiConverter.NodeAddEvent(this.button2,cc.Node.EventType.TOUCH_START,this,this.LoadResources);
     }
 
     public Collection(event:cc.Event.EventTouch):void{
@@ -102,12 +105,56 @@ export default class Demo extends cc.Component {
             cc.log(item);
         }
 
-        cc.log(arrayStr);   
+        cc.log(arrayStr);
 
 
-        let dic = new Map<number,number>();
+        let map = new Map<number,string>();
+        //对于存在的key 可以重复set
+        map.set(1,"fxk");
+        map.set(2,"hyg");
+        map.set(3,"xb");
 
+        cc.log(map.get(1));   
+
+        //判断是否存在key
+        let ishas = map.has(120);
+        cc.log(ishas);
+
+        //字典的大小
+        let count= map.size;
+        cc.log("字典的个数是"+count);
+
+        //移除一个kv 如果存在返回true 反之 不存在不会报错
+        map.delete(120);
+
+        //foreach 打印
+        map.forEach((val, key, array) =>{
+            cc.log(key+" : "+val);
+        });
+
+        //获取所有的key??
+        let keys = map.keys();
+        
+        // 获取所有的value??
+        let vals = map.values();
+
+        //清空字典
+        map.clear();
     }
 
+
+    public LoadResources(){
+        cc.log("资源加载");
+        let self =this;
+        cc.loader.loadRes("TestObject",cc.Prefab,function(error: Error, resource: any){
+            let nodeX:cc.Node = cc.instantiate(resource);
+            cc.loader.release("TestObject");
+            nodeX.parent = self.node;
+            let image = nodeX.getComponent(cc.Sprite);
+            cc.loader.loadRes("test",cc.SpriteFrame,function(error: Error, resource: any){
+                image.spriteFrame = resource;
+            });
+        });
+    }   
 
 }

@@ -24,9 +24,9 @@ export default class ApiConverter
 	
     //cc.Node.EventType.TOUCH_START
     //cc.Event.EventTouch
-    public static NodeAddEvent<T>(node:cc.Node,eventType:string,callback: (event: T) => void){
+    public static NodeAddEvent<T>(node:cc.Node,eventType:string,target: any,callback: (event: T) => void){
         //node
-        node.on(eventType,callback);
+        node.on(eventType,callback,target);
     }
 
     public static NodeLookAtTarget(node:cc.Node,target:cc.Node){
